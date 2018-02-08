@@ -1,6 +1,21 @@
 package fi.hh.vko2.BookStore.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+
+@Entity
 public class Book {
+
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
+	
+	
 	public String title;
 	public String author;
 	public int year;
@@ -20,6 +35,13 @@ public class Book {
 		this.year = year;
 		this.isbn = isbn;
 		this.price = price;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getTitle() {
 		return title;
@@ -50,5 +72,9 @@ public class Book {
 	}
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	public String toString() {
+		return  "Book id=" + id + "title=" + title + ", author=" + author 
+				+", year=" + year + ", isbn=" + isbn + ", price=" + price;
 	}
 }
