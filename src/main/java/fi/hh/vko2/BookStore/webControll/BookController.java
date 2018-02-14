@@ -1,6 +1,5 @@
 package fi.hh.vko2.BookStore.webControll;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,47 +12,55 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fi.hh.vko2.BookStore.model.Book;
 import fi.hh.vko2.BookStore.model.BookRepository;
+import fi.hh.vko2.BookStore.model.CategoryRepository;
 
 @Controller
 public class BookController {
 	
-	//Luo listan, johon voi tallentaa useampia luokka olioita 
+	//Listaa lisättyjä olioita
 	@Autowired
 	private BookRepository repository;
+	@Autowired
+	private CategoryRepository crepository;
 	
+	//Kirjalistan päänäkymä
     @RequestMapping(value="/index")
     public String booklist(Model model) {	
         model.addAttribute("books", repository.findAll());
         return "booklist";
     }
     
+    //Mahdollisuus lisätä kirjan ja categoria
 	@GetMapping(value="/add")
 	public String listbook(Model model) {
-		model.addAttribute("book", new Book());
+		model.addAttribute("book", new Book()); 
+		model.addAttribute("categorys", crepository.findAll());
 		return "addBook";
 	}
 	
-    //Komento ohjaa addbook.html sivulle, jonka kautta voi lisätä kirjan
+  
 	@RequestMapping(value="/add")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
+		model.addAttribute("categorys", crepository.findAll());
 		return "addBook";
 	}
 	
-	//addbook.html sivulla kun on lisännut kirjan se lisää tiedot pääsivulle ja repositoryyn, sen jälkeen se ohjaa takaisin pää sivulle eli /index
+	//Tallentaa lisätyn kirjan tiedot
 	@PostMapping(value="/save")
 	public String saveBook(Book book) {
 		repository.save(book);
 		return "redirect:index";
 	}
 	
-	//poistaa listatun kirjan
+	//Mahodllisuus poistaa kirjan listasta
 	@RequestMapping(value= "/delete/{id}", method = RequestMethod.GET)
 	public String DeleteBook(@PathVariable("id") Long bookId, Model model) {
 		repository.delete(bookId);
 		return "redirect:../index";
 	}
-	//muokkaa tallennetun luokka olion tietoja
+	
+	//Mahdollisuus muokata listassa oleva kirjan
 	@RequestMapping(value= "/edit/{id}")
 	public String editBook(@PathVariable("id") Long bookId, Model model) {
 		model.addAttribute("book", repository.findOne(bookId));

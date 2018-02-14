@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import ch.qos.logback.classic.Logger;
 import fi.hh.vko2.BookStore.model.Book;
 import fi.hh.vko2.BookStore.model.BookRepository;
+import fi.hh.vko2.BookStore.model.Category;
+import fi.hh.vko2.BookStore.model.CategoryRepository;
 
 
 @SpringBootApplication
@@ -22,12 +24,17 @@ public class BookstoreApplication {
 		
 	}
 	@Bean
-	public CommandLineRunner demo(BookRepository repository) {
+	public CommandLineRunner demo(BookRepository brepository, CategoryRepository crepository) {
 		return (args)-> {
 		log.info("Getting books");
-			repository.save(new Book("Palvelinohjelmointi", "juhani", 2015, 2123546, 25.20));
-			repository.save(new Book("Mobiiliohjelmointi", "juhani", 2018, 54984198, 50.75));
-		for(Book book : repository.findAll()) {
+			crepository.save(new Category("Studying"));
+			crepository.save(new Category("Comedy"));
+			crepository.save(new Category("Horror"));
+			
+			brepository.save(new Book("Palvelinohjelmointi", "juhani", 2015, 2123546, 25.20, crepository.findByName("Horror").get(0)));
+			brepository.save(new Book("Mobiiliohjelmointi", "juhani", 2018, 54984198, 50.75, crepository.findByName("Horror").get(0)));
+
+		for(Book book : brepository.findAll()) {
 				log.info(book.toString());
 			}
 		};
