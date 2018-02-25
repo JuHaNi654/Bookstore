@@ -44,7 +44,7 @@ public class BookController {
     	return repository.findOne(bookId);
     }
    
-    
+    //Testi
     //Mahdollisuus lisätä kirjan ja categoria
 	@GetMapping(value="/add")
 	public String listbook(Model model) {
