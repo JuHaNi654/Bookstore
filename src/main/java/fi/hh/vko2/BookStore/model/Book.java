@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -22,6 +24,8 @@ public class Book {
 	public int isbn;
 	public double price;
 	
+	//Jsoningore lisätään, jotta kirjalistauksesta ei synny infite looppia 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "categoryid")
 	private Category category;
