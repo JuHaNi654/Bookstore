@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Edit Book</title>
 </head>
 <body>
+	<h1>Edit Book</h1>
+	<h2 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h2>
 	<form th:object="${book}" th:action="@{../save}" action="#" method="post">
 		<input type="hidden" th:field="*{id}" class="form-control"/>
 		<input type="text" th:field="*{title}" />
@@ -20,6 +22,9 @@
 							th:text="${category.name}"></option>
 			</select>
 		<input type="submit" class="btn btn-success" value="Save"></input>
+	</form>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign out"/>
 	</form>
 </body>
 </html>

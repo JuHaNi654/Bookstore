@@ -4,6 +4,7 @@ package fi.hh.vko2.BookStore.webControll;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,10 @@ public class BookController {
 	@Autowired
 	private CategoryRepository crepository;
 	
+	@RequestMapping(value= {"/login", "/"})
+	public String login() {
+		return "login";
+	}
 	//Kirjalistan päänäkymä
     @RequestMapping(value="/index")
     public String booklist(Model model) {	
@@ -43,8 +48,6 @@ public class BookController {
     public @ResponseBody Book findBookRest(@PathVariable("id") Long bookId) {
     	return repository.findOne(bookId);
     }
-   
-    //Testi
     //Mahdollisuus lisätä kirjan ja categoria
 	@GetMapping(value="/add")
 	public String listbook(Model model) {
@@ -53,7 +56,6 @@ public class BookController {
 		return "addBook";
 	}
 	
-  
 	@RequestMapping(value="/add")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
@@ -75,7 +77,7 @@ public class BookController {
 		return "redirect:../index";
 	}
 	
-	//Mahdollisuus muokata listassa oleva kirjan
+	//Mahdollisuus muokata listassa oleva kirjan ja categorian
 	@RequestMapping(value= "/edit/{id}")
 	public String editBook(@PathVariable("id") Long bookId, Model model) {
 		model.addAttribute("book", repository.findOne(bookId));

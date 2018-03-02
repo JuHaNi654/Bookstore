@@ -1,33 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Add Book</title>
 </head>
 <body>
 	<h1>Add Book</h1>
+	<h2 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h2>
 	<div>
 		<form th:object="${book}" th:action="@{save}" action="#" method="post">
-			<label for="title">Title</label>
+			<label for="title">Title: </label>
 			<input type="text" id="title" th:field="*{title}" />
-			<label for="author">author</label>
+			<label for="author">author: </label>
 			<input type="text" id="author" th:field="*{author}" />
-			<label for="year">year</label>
+			<label for="year">year: </label>
 			<input type="text" id="year" th:field="*{year}" />
-			<label for="isbn">isbn</label>
+			<label for="isbn">isbn: </label>
 			<input type="text" id="isbn" th:field="*{isbn}" />
-			<label for="price">price</label>
+			<label for="price">price: </label>
 			<input type="text" id="price" th:field="*{price}" />
-			<input type="submit" value="Save"></input>
-			
-			<label for="Catlist">Category</label>
+			<label for="Catlist">Category: </label>
 			<select id="Catlist" th:field="*{category}" class="form-control">
 				<option th:each="category: ${categorys}"
 						th:value="${category.categoryid}"
 							th:text="${category.name}"></option>
 			</select>
-			
 			<input type="submit" value="Save"></input>
+		</form>
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign out"/>
 		</form>
 	</div>
 </body>
