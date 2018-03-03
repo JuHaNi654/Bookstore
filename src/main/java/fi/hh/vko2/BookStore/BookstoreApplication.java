@@ -13,6 +13,8 @@ import fi.hh.vko2.BookStore.model.Book;
 import fi.hh.vko2.BookStore.model.BookRepository;
 import fi.hh.vko2.BookStore.model.Category;
 import fi.hh.vko2.BookStore.model.CategoryRepository;
+import fi.hh.vko2.BookStore.model.User;
+import fi.hh.vko2.BookStore.model.UserRepository;
 
 
 @SpringBootApplication
@@ -24,9 +26,14 @@ public class BookstoreApplication {
 		
 	}
 	@Bean
-	public CommandLineRunner demo(BookRepository brepository, CategoryRepository crepository) {
+	public CommandLineRunner demo(BookRepository brepository, CategoryRepository crepository, UserRepository urepository) {
 		return (args)-> {
 		log.info("Getting books");
+			User user1 = new User("user", "$2a$04$oheZMjsyInGoMrrpzcTAbO76ru1XC7w.DUgb5.QMPBYjCUkOGSI/K", "user@user.fi", "USER");
+			User user2 = new User("admin", "$2a$04$fGOyAorfsG6PzTjiZG1GkueAzli1cvd.Jc5fBcOIarQ9mC8Iv2FI.", "admin@admin.fi", "ADMIN");
+			urepository.save(user1);
+			urepository.save(user2);
+			
 			crepository.save(new Category("Studying"));
 			crepository.save(new Category("Comedy"));
 			crepository.save(new Category("Horror"));
