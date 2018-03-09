@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import fi.hh.vko2.BookStore.model.Book;
 import fi.hh.vko2.BookStore.model.BookRepository;
 import fi.hh.vko2.BookStore.model.CategoryRepository;
+import fi.hh.vko2.BookStore.model.UserRepository;
 
 @Controller
 public class BookController {
@@ -26,6 +27,7 @@ public class BookController {
 	private BookRepository repository;
 	@Autowired
 	private CategoryRepository crepository;
+
 	
 	@RequestMapping(value= {"/login", "/"})
 	public String login() {
